@@ -23,6 +23,8 @@ const updateTimerComponent = function (minutes, seconds) {
 }
 
 const initCountdown = function (minutes) {
+  
+  updateTimerComponent(minutes, 0);
 
   let totalSeconds = minutesToSeconds(minutes);
 
