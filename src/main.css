@@ -18,6 +18,15 @@ html, body, main {
   font-family: 'Roboto', sans-serif;
 }
 
+/* General sytles for component */
+
+.btn {
+  padding: .5rem 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Styles for the pomodoro App */
 .pomodoro {
   padding-top: 1rem;
 }
@@ -41,6 +50,12 @@ html, body, main {
   font-size: 5rem;
   text-align: center;
   font-weight: bolder;
+}
+
+.pomodoro__footer {
+  text-align: center;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
 }
 
 @media screen and (min-width: 768px) {
