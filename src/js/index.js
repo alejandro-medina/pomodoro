@@ -1,7 +1,7 @@
-const DEFAULTS = {
-  pomodoroTime: 25,
-  shortBreakTime: 5,
-  longBreakTime: 15
+const DEFAULT_TIME_IN_MINUTES = {
+  focus: 25,
+  shortBreak: 5,
+  longBreak: 15
 }
 
 // Select elements from the DOM
@@ -18,8 +18,8 @@ const addLeadingZero = function (number) {
 }
 
 const updateTimerComponent = function (minutes, seconds) {
-  minutesElement.textContent = minutes;
-  secondsElement.textContent = seconds;
+  minutesElement.textContent = addLeadingZero(minutes);
+  secondsElement.textContent = addLeadingZero(seconds);
 }
 
 const initCountdown = function (minutes) {
@@ -36,8 +36,8 @@ const initCountdown = function (minutes) {
 
     // Update the DOM
     updateTimerComponent(
-      addLeadingZero(remainingMinutes),
-      addLeadingZero(remainingSeconds)
+      remainingMinutes,
+      remainingSeconds
     );
 
     if (totalSeconds === 0) {
@@ -48,7 +48,7 @@ const initCountdown = function (minutes) {
 }
 
 startButton.addEventListener("click", function () {
-  initCountdown(DEFAULTS.pomodoroTime);
+  initCountdown(DEFAULT_TIME_IN_MINUTES.focus);
 });
 
 window.onload = function () {
