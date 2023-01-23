@@ -4,6 +4,8 @@ const DEFAULT_TIME_IN_MINUTES = {
   longBreak: 15
 }
 
+let intervalId = null;
+
 // Select elements from the DOM
 const minutesElement = document.querySelector("span.minutes");
 const secondsElement = document.querySelector("span.seconds");
@@ -24,11 +26,15 @@ const updateTimerComponent = function (minutes, seconds) {
 
 const initCountdown = function (minutes) {
   
+  if (intervalId) {
+    clearInterval(intervalId);
+  }
+
   updateTimerComponent(minutes, 0);
 
   let totalSeconds = minutesToSeconds(minutes);
 
-  const intervalId = setInterval(function () {
+  intervalId = setInterval(function () {
 
     totalSeconds--;
 
