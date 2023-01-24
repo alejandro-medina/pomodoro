@@ -20,6 +20,11 @@ const addLeadingZero = function (number) {
   return number < 10 ? `0${number}` : number;
 }
 
+const playBell = function () {
+  const audio = new Audio("./media/bell.wav");
+  audio.play();
+}
+
 const updateTimerComponent = function (minutes, seconds) {
   minutesElement.textContent = addLeadingZero(minutes);
   secondsElement.textContent = addLeadingZero(seconds);
@@ -45,6 +50,7 @@ const tick = function () {
 
     if (totalSeconds === 0) {
       clearInterval(intervalId);
+      playBell();
     }
   }, 1000)
 }
