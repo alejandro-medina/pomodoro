@@ -10,9 +10,6 @@ let totalSeconds = 0;
 // Select elements from the DOM
 const minutesElement = document.querySelector("span.minutes");
 const secondsElement = document.querySelector("span.seconds");
-const startButton = document.querySelector("button#start-button");
-const pauseButton = document.querySelector("button#pause-button");
-const continueButton = document.querySelector("button#continue-button");
 const actionButton = document.querySelector("button#action-button");
 
 const minutesToSeconds = function (minutes) {
@@ -68,13 +65,11 @@ actionButton.addEventListener("click", function () {
     this.textContent = "Pause";
     return;
   }
-  // if is runnig, make a pause
   else if (action === "pause") {
     clearInterval(intervalId);
     this.dataset.action = "continue";
     this.textContent = "Continue";
   }
-  // If is paused, continue
   else if (action === "continue") {
     if (totalSeconds > 0) {
       this.dataset.action = "pause";
@@ -85,5 +80,5 @@ actionButton.addEventListener("click", function () {
 });
 
 window.onload = function () {
-  // minutesElement.textContent = DEFAULTS.pomodoroTime;
+  updateTimerComponent(DEFAULT_TIME_IN_MINUTES.focus, 0);
 }
