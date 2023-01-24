@@ -17,6 +17,9 @@ const stopButton = document.querySelector("button#stop-button");
 const title = document.getElementById("pomodoro-title");
 
 // Helper functions
+const beforeUnload = function () {
+  return true;
+}
 
 const minutesToSeconds = function (minutes) {
   return minutes * 60;
@@ -45,6 +48,7 @@ const updateActionButton = function (action) {
 
 const stopTimer = function () {
   playBell();
+  window.onbeforeunload = null;
   clearInterval(intervalId);
   stopButton.style.display = "none";
   updateActionButton("Start");
@@ -67,6 +71,7 @@ const stopTimer = function () {
 const tick = function () {
 
   if (intervalId) clearInterval(intervalId);
+  window.onbeforeunload = beforeUnload;
 
   intervalId = setInterval(function () {
 
