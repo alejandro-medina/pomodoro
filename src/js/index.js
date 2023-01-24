@@ -37,8 +37,16 @@ const playBell = function () {
 // Update DOM functions
 
 const updateTimerComponent = function (minutes, seconds) {
-  minutesElement.textContent = addLeadingZero(minutes);
-  secondsElement.textContent = addLeadingZero(seconds);
+
+  minutes = addLeadingZero(minutes);
+  seconds = addLeadingZero(seconds);
+
+  minutesElement.textContent = minutes;
+  secondsElement.textContent = seconds;
+
+  const tabTitle = `${minutes}:${seconds} ${currentTimer.name} | Pomodoro App`;
+
+  document.title = tabTitle;
 }
 
 const updateActionButton = function (action) {
