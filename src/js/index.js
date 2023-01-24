@@ -1,16 +1,16 @@
-const DEFAULT_TIME_IN_MINUTES = {
-  focus: 25,
-  shortBreak: 5,
-  longBreak: 15
-}
+const FOCUS = { name: 'Focus time', time: 25 };
+const SHORT_BREAK = { name: 'Short break', time: 5 }
+const LONG_BREAK = { name: 'Long break', time: 15 }
 
 let intervalId = null;
 let totalSeconds = 0;
+let nextTimer = FOCUS;
 
 // Select elements from the DOM
 const minutesElement = document.querySelector("span.minutes");
 const secondsElement = document.querySelector("span.seconds");
 const actionButton = document.querySelector("button#action-button");
+const title = document.getElementById("pomodoro-title");
 
 const minutesToSeconds = function (minutes) {
   return minutes * 60;
@@ -66,7 +66,7 @@ actionButton.addEventListener("click", function () {
   const action = this.dataset.action;
   // start the countdown
   if (action === "start") {
-    initCountdown(DEFAULT_TIME_IN_MINUTES.focus);
+    initCountdown(nextTimer.time);
     this.dataset.action = "pause";
     this.textContent = "Pause";
     return;
@@ -86,5 +86,6 @@ actionButton.addEventListener("click", function () {
 });
 
 window.onload = function () {
-  updateTimerComponent(DEFAULT_TIME_IN_MINUTES.focus, 0);
+  updateTimerComponent(FOCUS.time, 0);
+  title.textContent = FOCUS.name;
 }
