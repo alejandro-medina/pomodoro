@@ -9,13 +9,14 @@ let totalSeconds = 0;
 let currentTimer = FOCUS;
 let totalPodomoros = 0;
 
-
 // Select elements from the DOM
 const minutesElement = document.querySelector("span.minutes");
 const secondsElement = document.querySelector("span.seconds");
 const actionButton = document.querySelector("button#action-button");
 const stopButton = document.querySelector("button#stop-button");
 const title = document.getElementById("pomodoro-title");
+
+// Helper functions
 
 const minutesToSeconds = function (minutes) {
   return minutes * 60;
@@ -30,9 +31,37 @@ const playBell = function () {
   audio.play();
 }
 
+// Update DOM functions
+
 const updateTimerComponent = function (minutes, seconds) {
   minutesElement.textContent = addLeadingZero(minutes);
   secondsElement.textContent = addLeadingZero(seconds);
+}
+
+const updateActionButton = function (action) {
+  actionButton.dataset.action = action.toLowerCase();
+  actionButton.textContent = action;
+}
+
+const stopTimer = function () {
+  playBell();
+  clearInterval(intervalId);
+  stopButton.style.display = "none";
+  updateActionButton("Start");
+
+  // If current was a kind of break, then activate a focus timer
+  if (currentTimer.id === "short" || currentTimer.id === "long") {
+    currentTimer = FOCUS;
+    totalPodomoros++; // a pomodoro is completed after every break;
+  }
+  // If current was a focus, activate a break
+  else if (currentTimer.id === "focus") {
+    currentTimer = (totalPodomoros + 1) % LONG_BREAK_INTERVALS == 0 ? LONG_BREAK : SHORT_BREAK;
+  }
+
+  // Update view
+  updateTimerComponent(currentTimer.time, 0);
+  title.textContent = currentTimer.name;
 }
 
 const tick = function () {
@@ -53,10 +82,8 @@ const tick = function () {
       remainingSeconds
     );
 
-    if (totalSeconds === 0) {
-      clearInterval(intervalId);
-      playBell();
-    }
+    if (totalSeconds === 0) stopTimer();
+
   }, 1000)
 }
 
@@ -66,10 +93,7 @@ const initCountdown = function (minutes) {
   tick();
 }
 
-const updateActionButton = function (action) {
-  actionButton.dataset.action = action.toLowerCase();
-  actionButton.textContent = action;
-}
+// Events
 
 actionButton.addEventListener("click", function () {
 
@@ -95,24 +119,7 @@ actionButton.addEventListener("click", function () {
   }
 });
 
-stopButton.addEventListener("click", function () {
-  playBell();
-  updateActionButton("Start");
-  this.style.display = "none";
-
-  // If current was a kind of break, then activate a focus timer
-  if (currentTimer.id === "short" || currentTimer.id === "long") {
-    currentTimer = FOCUS;
-    totalPodomoros++; // a pomodoro is completed after every break;
-  }
-  // If current was a focus, activate a break
-  else if (currentTimer.id === "focus") {
-    currentTimer = (totalPodomoros + 1) % LONG_BREAK_INTERVALS == 0 ? LONG_BREAK : SHORT_BREAK;
-  }
-
-  updateTimerComponent(currentTimer.time, 0);
-  title.textContent = currentTimer.name;
-});
+stopButton.addEventListener("click", stopTimer);
 
 window.onload = function () {
   updateTimerComponent(currentTimer.time, 0);
