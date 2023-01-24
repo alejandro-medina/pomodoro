@@ -5,11 +5,15 @@ const DEFAULT_TIME_IN_MINUTES = {
 }
 
 let intervalId = null;
+let totalSeconds = 0;
 
 // Select elements from the DOM
 const minutesElement = document.querySelector("span.minutes");
 const secondsElement = document.querySelector("span.seconds");
 const startButton = document.querySelector("button#start-button");
+const pauseButton = document.querySelector("button#pause-button");
+const continueButton = document.querySelector("button#continue-button");
+const actionButton = document.querySelector("button#action-button");
 
 const minutesToSeconds = function (minutes) {
   return minutes * 60;
@@ -24,15 +28,9 @@ const updateTimerComponent = function (minutes, seconds) {
   secondsElement.textContent = addLeadingZero(seconds);
 }
 
-const initCountdown = function (minutes) {
-  
-  if (intervalId) {
-    clearInterval(intervalId);
-  }
+const tick = function () {
 
-  updateTimerComponent(minutes, 0);
-
-  let totalSeconds = minutesToSeconds(minutes);
+  if (intervalId) clearInterval(intervalId);
 
   intervalId = setInterval(function () {
 
@@ -52,11 +50,38 @@ const initCountdown = function (minutes) {
       clearInterval(intervalId);
     }
   }, 1000)
-
 }
 
-startButton.addEventListener("click", function () {
-  initCountdown(DEFAULT_TIME_IN_MINUTES.focus);
+const initCountdown = function (minutes) {
+  updateTimerComponent(minutes, 0);
+  totalSeconds = minutesToSeconds(minutes);
+  tick();
+}
+
+actionButton.addEventListener("click", function () {
+  
+  const action = this.dataset.action;
+  // start the countdown
+  if (action === "start") {
+    initCountdown(DEFAULT_TIME_IN_MINUTES.focus);
+    this.dataset.action = "pause";
+    this.textContent = "Pause";
+    return;
+  }
+  // if is runnig, make a pause
+  else if (action === "pause") {
+    clearInterval(intervalId);
+    this.dataset.action = "continue";
+    this.textContent = "Continue";
+  }
+  // If is paused, continue
+  else if (action === "continue") {
+    if (totalSeconds > 0) {
+      this.dataset.action = "pause";
+      this.textContent = "Pause";
+      tick();
+    }
+  }
 });
 
 window.onload = function () {
