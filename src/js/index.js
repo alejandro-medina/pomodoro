@@ -35,6 +35,11 @@ const playBell = function () {
   audio.play();
 }
 
+const playClick = function () {
+  const audio = new Audio("./media/click.wav");
+  audio.play();
+}
+
 // Update DOM functions
 
 const updateTimerComponent = function (minutes, seconds) {
@@ -115,6 +120,7 @@ actionButton.addEventListener("click", function () {
   const action = this.dataset.action;
   // start the countdown
   if (action === "start") {
+    playClick();
     initCountdown(currentTimer.time);
     updateActionButton("Pause");
     stopButton.style.display = "none";
