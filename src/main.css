@@ -2,12 +2,18 @@
   box-sizing: border-box;
 }
 
+a {
+  color: inherit;
+}
+
 html, body, main {
   height: 100%;
 }
 
 body {
   font-family: 'Roboto', sans-serif;
+  background-color: #1abc9c;
+  color: white;
 }
 
 .container {
@@ -20,6 +26,8 @@ body {
 .app {
   padding: 1rem;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* General sytles for component */
@@ -30,9 +38,28 @@ body {
   cursor: pointer;
 }
 
+header {
+  padding: 1rem 0;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
 /* Styles for the pomodoro App */
+.pomo-container {
+  flex-grow: 1;
+  display: flex;
+}
 .pomodoro {
-  padding-top: 1rem;
+  width: 100%;
+  padding: 2rem;
+  background-color: #16a085;
+  border: 2px dashed white;
+  border-radius: 1rem;
+  align-self: center;
 }
 
 .pomodoro .pomodoro__header {
@@ -42,7 +69,8 @@ body {
 
 .pomodoro .pomodoro__header p {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+  margin-bottom: 8px;
 }
 
 .pomodoro .pomodoro__timer {
@@ -62,17 +90,24 @@ body {
   margin-bottom: 1rem;
 }
 
+.pomodoro__footer button.btn {
+  background-color: white;
+  color: #222222;
+  border: none;
+  border-radius: 4px;
+}
+
 .pomodoro__footer #stop-button {
   display: none;
 }
 
 footer {
   padding: 2rem 0;
-  background-color: blanchedalmond;
+  background-color: #16a085;
 }
 
 footer .links p, footer .links a {
-  color: #020202;
+  color: white;
 }
 
 footer .links p {
@@ -84,7 +119,13 @@ footer .links p {
   .app {
     padding: 80px;
   }
-  .pomodoro .pomodoro__header p {
+  header .container > div {
+    padding: 0 80px;
+  }
+  footer .links {
+    padding: 0 80px;
+  }
+  .pomodoro .pomodoro__header p#pomodoro-title {
     font-size: 2rem;
   }
   .pomodoro .pomodoro__timer p.time {

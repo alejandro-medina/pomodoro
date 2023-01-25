@@ -23,22 +23,34 @@
   <main>
     <div class="container">
       <div class="app">
-        <div class="pomodoro">
-          <div class="pomodoro__header">
-            <p id="pomodoro-title"></p>
-          </div>
-          <div class="pomodoro__timer">
-            <p class="time">
-              <span class="minutes">00</span>:<span class="seconds">00</span>
-            </p>
-          </div>
-          <div class="pomodoro__footer">
-            <button data-action="start" class="btn" id="action-button">
-              Start
-            </button>
-            <button class="btn" id="stop-button">
-              Stop
-            </button>
+
+        <header>
+          <h1>Podomoro App</h1>
+          <p>What is
+            <a target="_blank" href="https://en.wikipedia.org/wiki/Pomodoro_Technique">
+              pomodoro?
+            </a>
+          </p>
+        </header>
+        <div class="pomo-container">
+          <div class="pomodoro">
+            <div class="pomodoro__header">
+              <p id="pomodoro-title"></p>
+              <p id="total-pomodoro">#2</p>
+            </div>
+            <div class="pomodoro__timer">
+              <p class="time">
+                <span class="minutes">00</span>:<span class="seconds">00</span>
+              </p>
+            </div>
+            <div class="pomodoro__footer">
+              <button data-action="start" class="btn" id="action-button">
+                Start
+              </button>
+              <button class="btn" id="stop-button">
+                Stop
+              </button>
+            </div>
           </div>
         </div>
       </div>
