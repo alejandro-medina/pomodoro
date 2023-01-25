@@ -3,6 +3,7 @@ const SHORT_BREAK = { id: 'short', name: 'Short break', time: 5 }
 const LONG_BREAK = { id: 'long', name: 'Long break', time: 15 }
 
 const LONG_BREAK_INTERVALS = 4;
+const APP_TITLE = "Pomodoro App";
 
 let intervalId = null;
 let totalSeconds = 0;
@@ -10,8 +11,7 @@ let currentTimer = FOCUS;
 let totalPodomoros = 0;
 
 // Select elements from the DOM
-const minutesElement = document.querySelector("span.minutes");
-const secondsElement = document.querySelector("span.seconds");
+const timeElement = document.querySelector("p.time");
 const actionButton = document.querySelector("button#action-button");
 const stopButton = document.querySelector("button#stop-button");
 const title = document.getElementById("pomodoro-title");
@@ -27,7 +27,13 @@ const minutesToSeconds = function (minutes) {
 }
 
 const addLeadingZero = function (number) {
-  return number < 10 ? `0${number}` : number;
+  return `0${number}`;
+}
+
+const formatTime = function(minutes, seconds) {
+  if (minutes < 10) minutes = addLeadingZero(minutes);
+  if (seconds < 10) seconds = addLeadingZero(seconds);
+  return `${minutes}:${seconds}`;
 }
 
 const playBell = function () {
@@ -43,15 +49,10 @@ const playClick = function () {
 // Update DOM functions
 
 const updateTimerComponent = function (minutes, seconds) {
+  const timeString = formatTime(minutes, seconds);
+  timeElement.textContent = timeString;
 
-  minutes = addLeadingZero(minutes);
-  seconds = addLeadingZero(seconds);
-
-  minutesElement.textContent = minutes;
-  secondsElement.textContent = seconds;
-
-  const tabTitle = `${minutes}:${seconds} ${currentTimer.name} | Pomodoro App`;
-
+  const tabTitle = `${timeString} ${currentTimer.name} | ${APP_TITLE}`;
   document.title = tabTitle;
 }
 
