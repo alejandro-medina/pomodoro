@@ -15,6 +15,7 @@ const secondsElement = document.querySelector("span.seconds");
 const actionButton = document.querySelector("button#action-button");
 const stopButton = document.querySelector("button#stop-button");
 const title = document.getElementById("pomodoro-title");
+const totalPomodorosElement = document.getElementById("total-pomodoro");
 
 // Helper functions
 const beforeUnload = function () {
@@ -64,11 +65,12 @@ const stopTimer = function () {
   // If current was a kind of break, then activate a focus timer
   if (currentTimer.id === "short" || currentTimer.id === "long") {
     currentTimer = FOCUS;
-    totalPodomoros++; // a pomodoro is completed after every break;
   }
   // If current was a focus, activate a break
   else if (currentTimer.id === "focus") {
     currentTimer = (totalPodomoros + 1) % LONG_BREAK_INTERVALS == 0 ? LONG_BREAK : SHORT_BREAK;
+    totalPodomoros++; // a pomodoro is completed after every focus;
+    totalPomodorosElement.textContent = totalPodomoros;
   }
 
   // Update view
@@ -137,4 +139,5 @@ stopButton.addEventListener("click", stopTimer);
 window.onload = function () {
   updateTimerComponent(currentTimer.time, 0);
   title.textContent = currentTimer.name;
+  totalPomodorosElement.textContent = totalPodomoros;
 }
