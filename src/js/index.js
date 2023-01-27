@@ -1,3 +1,5 @@
+const worker = new Worker("./js/interval-worker.js"); 
+
 const FOCUS = { id: 'focus', name: 'Focus time', time: 25 };
 const SHORT_BREAK = { id: 'short', name: 'Short break', time: 5 }
 const LONG_BREAK = { id: 'long', name: 'Long break', time: 15 }
@@ -64,7 +66,9 @@ const updateActionButton = function (action) {
 const stopTimer = function () {
   playBell();
   window.onbeforeunload = null;
-  clearInterval(intervalId);
+  
+  worker.postMessage({ action: "stop" });
+
   stopButton.style.display = "none";
   updateActionButton("Start");
 
@@ -86,26 +90,23 @@ const stopTimer = function () {
 
 const tick = function () {
 
-  if (intervalId) clearInterval(intervalId);
   window.onbeforeunload = beforeUnload;
 
-  intervalId = setInterval(function () {
+  worker.postMessage({ action: "start", seconds: totalSeconds });
 
-    totalSeconds--;
-
-    // Calculate minutes & seconds
-    const remainingMinutes = Math.floor(totalSeconds / 60);
-    const remainingSeconds = totalSeconds % 60;
+  worker.onmessage = (e) => {
+    const { minutes, seconds, total } = e.data;
 
     // Update the DOM
     updateTimerComponent(
-      remainingMinutes,
-      remainingSeconds
+      minutes,
+      seconds
     );
 
-    if (totalSeconds === 0) stopTimer();
+    totalSeconds = total;
 
-  }, 1000)
+    if (total === 0) stopTimer();
+  }
 }
 
 const initCountdown = function (minutes) {
@@ -128,7 +129,7 @@ actionButton.addEventListener("click", function () {
     return;
   }
   else if (action === "pause") {
-    clearInterval(intervalId);
+    worker.postMessage({ action: "stop" });
     stopButton.style.display = "initial";
     updateActionButton("Continue");
   }
