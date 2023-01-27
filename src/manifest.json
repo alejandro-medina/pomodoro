@@ -1,0 +1,32 @@
+{
+  "name": "Pomodoro App",
+  "short_name": "Pomodoro",
+  "icons": [
+    {
+      "src": "./media/img/sand-clock-16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "./media/img/sand-clock-24.png",
+      "type": "image/png",
+      "sizes": "24x24"
+    },
+    {
+      "src": "./media/img/sand-clock-256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "./media/img/sand-clock-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "scope": "/",
+  "start_url": "/",
+  "background_color": "#1abc9c",
+  "display": "standalone",
+  "theme_color": "#1abc9c",
+  "orientation": "portrait"
+}
