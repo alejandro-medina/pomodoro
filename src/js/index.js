@@ -16,6 +16,7 @@ let totalPodomoros = 0;
 const timeElement = document.querySelector("p.time");
 const actionButton = document.querySelector("button#action-button");
 const stopButton = document.querySelector("button#stop-button");
+const skipButton = document.querySelector("button#skip-button");
 const title = document.getElementById("pomodoro-title");
 const totalPomodorosElement = document.getElementById("total-pomodoro");
 
@@ -143,6 +144,10 @@ actionButton.addEventListener("click", function () {
 });
 
 stopButton.addEventListener("click", stopTimer);
+
+skipButton.addEventListener("click", function () {
+  stopTimer();
+});
 
 window.onload = function () {
   updateTimerComponent(currentTimer.time, 0);
